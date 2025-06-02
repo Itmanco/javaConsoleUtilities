@@ -33,7 +33,7 @@ public class Utils {
 	    int menuOption = scan.nextInt();
 	   
 	    while(menuOption != -1) {
-		    functionalities(menuOption);
+		    functionalities(menuOption, scan);
 		    mainMenu();
 		    menuOption = scan.nextInt();
 	    }
@@ -60,26 +60,28 @@ public class Utils {
 	
 	/**
 	 * メインメニューで選択した機能を実行する
+	 * @param int メインメニューからオプションを選択
+	 * @param Scanner コンソールを操作するために使用
 	 */
-	public static void functionalities(int option) {
+	public static void functionalities(int option, Scanner scan) {
 		switch(option) {
 		case 1:
-			decToBin();
+			decToBin(scan);
 			break;
 		case 2:
-			binToDec();
+			binToDec(scan);
 			break;
 		case 3:
-			binToHex();
+			binToHex(scan);
 			break;
 		case 4:
-			hexToDec();
+			hexToDec(scan);
 			break;
 		case 5:
-			decToHex();
+			decToHex(scan);
 			break;
 		case 6:
-			openLog();
+			openLog(scan);
 			break;
 		case 7:
 			cleanLog();
@@ -90,11 +92,11 @@ public class Utils {
 
 	/**
 	 * コンソールから整数である必要がある 10 進数値を読み取り、それをバイナリに変換して、結果をコンソールに出力します。
+	 * @param Scanner コンソールを操作するために使用
 	 * @return void
 	 */
-	public static void decToBin() {
+	public static void decToBin(Scanner scan) {
 		
-		Scanner scan = new Scanner(System.in);
 		int dividend = -1, initial = -1;
 	
 		boolean continueInput = true;
@@ -136,13 +138,14 @@ public class Utils {
 	
 	/**
 	 * コンソールから 2 進数を読み取り、それを 10 進数に変換して、結果をコンソールに出力します。
+	 * @param Scanner コンソールを操作するために使用
 	 * @return void
 	 */
-	public static void binToDec() {
-		Scanner scan = new Scanner(System.in);
-		String binaryNumber = "";
+	public static void binToDec(Scanner scan) {
 		
+		String binaryNumber = "";
 		boolean continueInput = true;
+		scan.nextLine();
 
 		do {
 			System.out.println("2進数を入力してください");
@@ -183,15 +186,15 @@ public class Utils {
 	
 	/**
 	 * コンソールから 2 進数を読み取り、それを 16 進数に変換して、結果をコンソールに出力します。
+	 * @param Scanner コンソールを操作するために使用
 	 * @return void
 	 */
-	public static void binToHex() {
-
-		Scanner scan = new Scanner(System.in);
+	public static void binToHex(Scanner scan) {
+		
 		String binaryNumber = "";
 		
 		boolean continueInput = true;
-
+		scan.nextLine();
 		do {
 			System.out.println("2進数を入力してください");
 			binaryNumber = scan.nextLine();
@@ -234,14 +237,15 @@ public class Utils {
 	
 	/**
 	 * コンソールから 16 進数を読み取り、それを 10 進数に変換して、結果をコンソールに出力します。
+	 * @param Scanner コンソールを操作するために使用
 	 * @return void
 	 */
-	public static void hexToDec() {
+	public static void hexToDec(Scanner scan) {
 		
-		Scanner scan = new Scanner(System.in);
 		String hexaNumber = "";
 		
 		boolean continueInput = true;
+		scan.nextLine();
 
 		do {
 			System.out.println("16進数を入力してください");
@@ -279,13 +283,15 @@ public class Utils {
 	
 	/**
 	 * コンソールから 10 進数を読み取り、それを 16 進数に変換して、結果をコンソールに出力します。
+	 * @param Scanner コンソールを操作するために使用
 	 * @return void
 	 */
-	public static void decToHex() {
-		Scanner scan = new Scanner(System.in);
+	public static void decToHex(Scanner scan) {
+		
 		int dividend = -1, initial = -1;
 	
 		boolean continueInput = true;
+		scan.nextLine();
 
 		do {
 			try{
@@ -325,7 +331,7 @@ public class Utils {
 	 * ログファイルを開き、最後のログ削除以降に行われた操作をコンソールに出力します。
 	 * @return void
 	 */
-	public static void openLog() {
+	public static void openLog(Scanner scan) {
 		try {
 				String log = Files.readString(Paths.get(LOG_FILE_NAME));
 				
@@ -496,6 +502,7 @@ public class Utils {
 			break;
 		case "A":
 			answer = 10;
+			break;
 		case "a":
 			answer = 10;
 			break;
