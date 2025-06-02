@@ -467,78 +467,28 @@ public class Utils {
 	 * @return int 小数値
 	 */
     public static int getDecimal(String option) {
-    	int answer = 0;
-    	
-    	switch(option) {
-		case "0":
-			answer = 0;
-			break;
-		case "1":
-			answer = 1;
-			break;
-		case "2":
-			answer = 2;
-			break;
-		case "3":
-			answer = 3;
-			break;
-		case "4":
-			answer = 4;
-			break;
-		case "5":
-			answer = 5;
-			break;
-		case "6":
-			answer = 6;
-			break;
-		case "7":
-			answer = 7;
-			break;
-		case "8":
-			answer = 8;
-			break;
-		case "9":
-			answer = 9;
-			break;
-		case "A":
-			answer = 10;
-			break;
-		case "a":
-			answer = 10;
-			break;
-		case "B":
-			answer = 11;
-			break;
-		case "b":
-			answer = 11;
-			break;
-		case "C":
-			answer = 12;
-			break;
-		case "c":
-			answer = 12;
-			break;
-		case "D":
-			answer = 13;
-			break;
-		case "d":
-			answer = 13;
-			break;
-		case "E":
-			answer = 14;
-			break;
-		case "e":
-			answer = 14;
-			break;
-		case "F":
-			answer = 15;
-			break;
-		case "f":
-			answer = 15;
-			break;
-		}
-    	
-    	return answer;
+        int answer = 0;
+        
+        switch(option.toUpperCase()) { 
+        case "0": answer = 0; break;
+        case "1": answer = 1; break;
+        case "2": answer = 2; break;
+        case "3": answer = 3; break;
+        case "4": answer = 4; break;
+        case "5": answer = 5; break;
+        case "6": answer = 6; break;
+        case "7": answer = 7; break;
+        case "8": answer = 8; break;
+        case "9": answer = 9; break;
+        case "A": answer = 10; break;
+        case "B": answer = 11; break;
+        case "C": answer = 12; break;
+        case "D": answer = 13; break;
+        case "E": answer = 14; break;
+        case "F": answer = 15; break;
+        }
+        
+        return answer;
     }
 
 	/**
