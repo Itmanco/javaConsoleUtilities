@@ -43,7 +43,7 @@ abstract class SortInt{
 		String asnwer = "[ ";
 		for(int item: array)
 		{
-			asnwer += String.format("　%4d ",item);
+			asnwer += String.format(" %4d ",item);
 			asnwer += array[array.length-1] != item ? "|":" ]";
 		}
 		
@@ -58,7 +58,7 @@ abstract class SortInt{
 			}else if( i == b){
 				asnwer += String.format("< %4d ",array[i]);
 			}else {
-				asnwer += String.format("　%4d ",array[i]);
+				asnwer += String.format(" %4d ",array[i]);
 			}
 			
 			asnwer += array[array.length-1] != array[i] ? "|":" ]";
@@ -70,7 +70,7 @@ abstract class SortInt{
 		String asnwer = "[ ";
 		for(int item: this.initialArray)
 		{
-			asnwer += String.format("　%4d ",item);
+			asnwer += String.format(" %4d ",item);
 			asnwer += this.initialArray[this.initialArray.length-1] != item ? "|":" ]";
 		}
 		
@@ -304,23 +304,28 @@ class MergeSort extends SortInt{
 	    int i = 0, j = 0, k = left;
 	    while (i < n1 && j < n2) {
 	        if (leftArray[i] <= rightArray[j]) {
-	            arr[k++] = leftArray[i++];
+	            arr[k] = leftArray[i];
 	            addMovement();
-	    	    System.out.println(toString(arr,k++,i++));
+	    	    System.out.println(toString(arr,k,i));
+	    	    k++;i++;
 	        } else {
 	            arr[k++] = rightArray[j++];
 	        }
 	    }
 
 	    while (i < n1) {
-	        arr[k++] = leftArray[i++];
+	        arr[k] = leftArray[i];
 	        addMovement();
-    	    System.out.println(toString(arr,k++,i++));
+    	    System.out.println(toString(arr,k,i));
+    	    k++;
+    	    i++;
 	    }
 	    while (j < n2) {
-	        arr[k++] = rightArray[j++];
+	        arr[k] = rightArray[j];
 	        addMovement();
-    	    System.out.println(toString(arr,k++,j++));
+    	    System.out.println(toString(arr,k,j));
+    	    k++;
+    	    j++;
 	    }
 	}
 }
@@ -351,13 +356,13 @@ public class LetsSort implements menu{
 			System.out.println("\n------------MENU----------------");//現在の配列を表示
 			System.out.println("やりたいこと選んで:");
 			System.out.printf("[ 1 ] - 配列のサイズを設定。            [実際の:     %5d]\n",size);
-			System.out.printf("[ 2 ] - 配列値の範囲を設定します。      [実際の:  0->%5d]\n",range);
+			System.out.printf("[ 2 ] - 配列値の範囲を設定します。       [実際の:  0->%5d]\n",range);
 			System.out.println("[ 3 ] - 現在の配列を表示");
 			System.out.println("[ 4 ] - QuickSort    を使って並べ替える"+(times[0]>0?String.format(" [最後の実行:%.3f sec]",times[0]):""));
 			System.out.println("[ 5 ] - BubbleSort   を使って並べ替える"+(times[1]>0?String.format(" [最後の実行:%.3f sec]",times[1]):""));
 			System.out.println("[ 6 ] - InsertionSortを使って並べ替える"+(times[2]>0?String.format(" [最後の実行:%.3f sec]",times[2]):""));
 			System.out.println("[ 7 ] - SelectionSortを使って並べ替える"+(times[3]>0?String.format(" [最後の実行:%.3f sec]",times[3]):""));
-			System.out.println("[ 8 ] - MergeSort    を使って並べ替える"+(times[4]>0?String.format(" [最後の実行:%.3f sec]",times[3]):""));
+			System.out.println("[ 8 ] - MergeSort    を使って並べ替える"+(times[4]>0?String.format(" [最後の実行:%.3f sec]",times[4]):""));
 			System.out.println("[-1 ] - 終了する");
 		}
 	}
