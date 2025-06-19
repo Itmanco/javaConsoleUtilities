@@ -1,14 +1,33 @@
 package utils;
 
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * 
+ * このコンソールアプリケーションは、いくつかのソートアルゴリズムの配列に対する性能を把握するために作成されました。
+ * 
+ * <p>利便性を考慮し、すべてのクラスは同じファイル内に追加されましたが、同一のパッケージに属する別々のファイルに容易に分割することも可能です。</p>
+ * <p> 2025年6月19日に完成</p>
+ * @author Motta Jaime  (モッタ ハイメ)
+ */
+
+
+
+/**
+ * このJavadocには、メニューインターフェースクラスの説明が記載されています。
+ * アプリケーションが提供する機能メニューとユーザーがやり取りするための基本的なメソッドが含まれています。
+ * <p>
+ * 目的は、コンソールアプリケーションにおけるユーザーメニューを作成するために必要なメソッドの基本的な標準を確立することです。
+ * </p>
+ */
 interface menu {
 	
+	/**
+	 * ユーザーとのやり取りを開始し、ユーザーが終了を選択するまでアプリケーションをアクティブな状態に保ちます。
+	 */
 	default void startMenu() {
 		mainMenu();
-		
 		Scanner scan = new Scanner(System.in);
 	    int menuOption = scan.nextInt();
 	   
@@ -33,11 +52,36 @@ interface menu {
 	abstract void functionalities(int option, Scanner scan);
 }
 
+
+/**
+ * このJavadocには、抽象クラス「SortInt」の説明が記載されています。
+ * <p>
+ * これは抽象クラスであり、さまざまな種類のソートアルゴリズムを用いてソートされる配列で使用されるプロパティおよびメソッドを含んでおり、
+ * 具象サブクラスによって実装されるべきメソッドも含まれています。
+ * </p>
+ */
 abstract class SortInt{
-	int[] initialArray, finalArray;
-	int movements = 0;
-	long startTime, elapsedTime;
-	final String name;
+	
+    /**
+     * T元の配列構成が変更されることなく保持されています。
+     */
+	private int[] initialArray;
+	/**
+	 * これは、ソート処理中に操作される元の配列のコピーです。
+	 */
+	protected int[] finalArray;
+	/**
+	 * これは、ソートアルゴリズムの実行中に配列に対して行われた変更の回数をカウントするためのカウンターです。
+	 */
+	public int movements = 0;
+	/**
+	 * アルゴリズムがソート処理を開始および終了する時刻を示す変数が含まれています。
+	 */
+	protected long startTime, elapsedTime;
+	/**
+	 * ソートを実行するために使用されたアルゴリズムの名称が含まれています。
+	 */
+	public final String name;
 	
 	static public String toString(int[] array) {
 		String answer = "|";
@@ -89,21 +133,47 @@ abstract class SortInt{
 		
 		return answer;
 	}
+	
+    /**
+     * クラスのコンストラクターであり、
+     * 初期配列、最終配列、およびアルゴリズム名を初期化します。
+     *
+     * @param int[] initialArray: 注文が行われる手配
+     * @param String name: 整列アルゴリズムの名称
+     */
 	public SortInt(int[] initialArray, String name) {
 		this.initialArray = copyArray(initialArray);
 		this.finalArray = copyArray(initialArray);
 		this.name = name;
 	}
+	
+    /**
+     * 受け取った配列のディープコピーを作成し、新しい配列を返すメソッド
+     *
+     * @param int[] a: コピー対象の手配
+     * @return int[] 再配置
+     */
 	private int[] copyArray(int[] a) {
         int[] destinationInts = new int[a.length];
         System.arraycopy(a, 0, destinationInts, 0, a.length);
         return destinationInts;
 	}
-	
+    /**
+     * ナノ秒単位の時刻を受け取り、処理開始からの経過時間を計算し、結果を秒単位で返す
+     *
+     * @param long stopNanoTime: ソートが完了するまでにかかった時間（ナノ秒単位）.
+     * @return double ソート開始からの経過時間の計算 「秒」
+     */
 	public double setElapsedTime(long stopNanoTime) {
 		this.elapsedTime = System.nanoTime() - this.startTime;
 		return (double)elapsedTime / 1_000_000_000.0;
 	}
+    /**
+     * ナノ秒単位の時刻を受け取り、処理開始からの経過時間を計算し、結果を秒単位で返す
+     *
+     * @param long stopNanoTime: ソートが完了するまでにかかった時間（ナノ秒単位）.
+     * @return double ソート開始からの経過時間の計算 「秒」
+     */
 	public String getElapsedTime() {
 		double val = (double)elapsedTime / 1_000_000_000.0;
 		if(val < 60) {
@@ -112,9 +182,19 @@ abstract class SortInt{
 			return String.format("%.3fmin", val/60);
 		}
 	}
+    /**
+     * 移動回数カウンターを増加させる
+     */
 	public void addMovement() {
 		this.movements++;
 	}
+    /**
+     * 本メソッドは、初期配列を整列する抽象メソッドです。
+     * このメソッドには、サブクラスによる具体的な実装が求められます。
+     * ソートの具体的な処理内容は、サブクラスごとに異なります
+     *
+     * @return int[] ソート済みの配列を返します（この配列はクラスのインスタンス化時に定義されました）
+     */
 	abstract int[]  sort();
 }
 
