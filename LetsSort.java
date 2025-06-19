@@ -40,42 +40,55 @@ abstract class SortInt{
 	final String name;
 	
 	static public String toString(int[] array) {
-		String asnwer = "[ ";
-		for(int item: array)
-		{
-			asnwer += String.format(" %4d ",item);
-			asnwer += array[array.length-1] != item ? "|":" ]";
-		}
+		String answer = "|";
 		
-		return asnwer;
+		for(int i = 0; i< array.length; i++)
+		{
+			answer += String.format("%4d ",array[i]);
+			answer += (i+1)%15==0 ? "\n" : "";
+			answer += array.length-1 != i ? "|":"";
+		}
+		return answer;
 	}
 	static public String toString(int[] array, int a, int b) {
-		String asnwer = "[ ";
+		String answer = "";
 		for(int i = 0; i < array.length; i++)
 		{
 			if(i == a){
-				asnwer += String.format("> %4d ",array[i]);
+				answer += String.format("|>%4d ",array[i]);
 			}else if( i == b){
-				asnwer += String.format("< %4d ",array[i]);
+				answer += String.format("|<%4d ",array[i]);
 			}else {
-				asnwer += String.format(" %4d ",array[i]);
+				answer += String.format("| %4d ",array[i]);
 			}
-			
-			asnwer += array[array.length-1] != array[i] ? "|":" ]";
+			answer += (i+1)%15==0 ? "\n" : "";
 		}
-		
-		return asnwer;
+		answer +=  "\n";
+		return answer;
 	}
-	public String toString() {
-		String asnwer = "[ ";
-		for(int item: this.initialArray)
+	public String toStringInitial() {
+		String answer = "|";
+		for(int i = 0; i< initialArray.length; i++)
 		{
-			asnwer += String.format(" %4d ",item);
-			asnwer += this.initialArray[this.initialArray.length-1] != item ? "|":" ]";
+			answer += String.format("%4d ",initialArray[i]);
+			answer += i%15==0 ? "\n" : "";
+			answer += initialArray.length-1 != i ? "|":"";
 		}
 		
-		return asnwer;
+		return answer;
 	}	
+	
+	public String toStringFinal() {
+		String answer = "|";
+		for(int i = 0; i< finalArray.length; i++)
+		{
+			answer += String.format("%4d ",finalArray[i]);
+			answer += i%15==0 ? "\n" : "";
+			answer += finalArray.length-1 != i ? "|":"";
+		}
+		
+		return answer;
+	}
 	public SortInt(int[] initialArray, String name) {
 		this.initialArray = copyArray(initialArray);
 		this.finalArray = copyArray(initialArray);
@@ -91,8 +104,13 @@ abstract class SortInt{
 		this.elapsedTime = System.nanoTime() - this.startTime;
 		return (double)elapsedTime / 1_000_000_000.0;
 	}
-	public double getElapsedTime() {
-		return (double)elapsedTime / 1_000_000_000.0;
+	public String getElapsedTime() {
+		double val = (double)elapsedTime / 1_000_000_000.0;
+		if(val < 60) {
+			return String.format("%.3fsec", val);
+		} else {
+			return String.format("%.3fmin", val/60);
+		}
 	}
 	public void addMovement() {
 		this.movements++;
@@ -333,7 +351,7 @@ class MergeSort extends SortInt{
 public class LetsSort implements menu{
 	static int size = 0, range = 0, sortingTypes = 5;
 	static int[] array; 
-	static double[] times = new double[sortingTypes];
+	static String[] times = new String[sortingTypes];
 	
 	public static void main(String[] args) {
 
@@ -358,11 +376,11 @@ public class LetsSort implements menu{
 			System.out.printf("[ 1 ] - 配列のサイズを設定。            [実際の:     %5d]\n",size);
 			System.out.printf("[ 2 ] - 配列値の範囲を設定します。       [実際の:  0->%5d]\n",range);
 			System.out.println("[ 3 ] - 現在の配列を表示");
-			System.out.println("[ 4 ] - QuickSort    を使って並べ替える"+(times[0]>0?String.format(" [最後の実行:%.3f sec]",times[0]):""));
-			System.out.println("[ 5 ] - BubbleSort   を使って並べ替える"+(times[1]>0?String.format(" [最後の実行:%.3f sec]",times[1]):""));
-			System.out.println("[ 6 ] - InsertionSortを使って並べ替える"+(times[2]>0?String.format(" [最後の実行:%.3f sec]",times[2]):""));
-			System.out.println("[ 7 ] - SelectionSortを使って並べ替える"+(times[3]>0?String.format(" [最後の実行:%.3f sec]",times[3]):""));
-			System.out.println("[ 8 ] - MergeSort    を使って並べ替える"+(times[4]>0?String.format(" [最後の実行:%.3f sec]",times[4]):""));
+			System.out.println("[ 4 ] - QuickSort    を使って並べ替える"+(times[0]!=null?String.format(" [最後の実行:%s]",times[0]):""));
+			System.out.println("[ 5 ] - BubbleSort   を使って並べ替える"+(times[1]!=null?String.format(" [最後の実行:%s]",times[1]):""));
+			System.out.println("[ 6 ] - InsertionSortを使って並べ替える"+(times[2]!=null?String.format(" [最後の実行:%s]",times[2]):""));
+			System.out.println("[ 7 ] - SelectionSortを使って並べ替える"+(times[3]!=null?String.format(" [最後の実行:%s]",times[3]):""));
+			System.out.println("[ 8 ] - MergeSort    を使って並べ替える"+(times[4]!=null?String.format(" [最後の実行:%s]",times[4]):""));
 			System.out.println("[-1 ] - 終了する");
 		}
 	}
@@ -403,7 +421,7 @@ public class LetsSort implements menu{
 		QuickSort s = new QuickSort(array);
 		s.sort();
 		times[0] = s.getElapsedTime();
-		System.out.printf("%s: Time %.3fsec - Movements %4d",s.name,s.getElapsedTime(),s.movements);
+		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 		
 	}
 	
@@ -411,7 +429,7 @@ public class LetsSort implements menu{
 		BubbleSort s = new BubbleSort(array);
 		s.sort();
 		times[1] = s.getElapsedTime();
-		System.out.printf("%s: Time %.3fsec - Movements %4d",s.name,s.getElapsedTime(),s.movements);
+		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 		
 	}
 	
@@ -419,7 +437,7 @@ public class LetsSort implements menu{
 		InsertionSort s = new InsertionSort(array);
 		s.sort();
 		times[2] = s.getElapsedTime();
-		System.out.printf("%s: Time %.3fsec - Movements %4d",s.name,s.getElapsedTime(),s.movements);
+		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 		
 	}
 	
@@ -427,7 +445,7 @@ public class LetsSort implements menu{
 		SelectionSort s = new SelectionSort(array);
 		s.sort();
 		times[3] = s.getElapsedTime();
-		System.out.printf("%s: Time %.3fsec - Movements %4d",s.name,s.getElapsedTime(),s.movements);
+		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 	}
 	
 
@@ -435,7 +453,7 @@ public class LetsSort implements menu{
 		MergeSort s = new MergeSort(array);
 		s.sort();
 		times[4] = s.getElapsedTime();
-		System.out.printf("%s: Time %.3fsec - Movements %4d",s.name,s.getElapsedTime(),s.movements);
+		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 		
 	}
 
@@ -466,7 +484,7 @@ public class LetsSort implements menu{
 		
 		if(size > 0 && range > 0) {
 			array = new int[size];
-			times = new double[sortingTypes];
+			times = new String[sortingTypes];
 			for(int i = 0; i < array.length; i++) {
 				array[i] = (int)(Math.random()*range);
 			}
@@ -499,7 +517,7 @@ public class LetsSort implements menu{
 		
 		if(size > 0 && range > 0) {
 			array = new int[size];
-			times = new double[sortingTypes];
+			times = new String[sortingTypes];
 			for(int i = 0; i < array.length; i++) {
 				array[i] = (int)(Math.random()*range);
 			}
