@@ -83,57 +83,6 @@ abstract class SortInt{
 	 */
 	public final String name;
 	
-	static public String toString(int[] array) {
-		String answer = "|";
-		
-		for(int i = 0; i< array.length; i++)
-		{
-			answer += String.format("%4d ",array[i]);
-			answer += (i+1)%15==0 ? "\n" : "";
-			answer += array.length-1 != i ? "|":"";
-		}
-		return answer;
-	}
-	static public String toString(int[] array, int a, int b) {
-		String answer = "";
-		for(int i = 0; i < array.length; i++)
-		{
-			if(i == a){
-				answer += String.format("|>%4d ",array[i]);
-			}else if( i == b){
-				answer += String.format("|<%4d ",array[i]);
-			}else {
-				answer += String.format("| %4d ",array[i]);
-			}
-			answer += (i+1)%15==0 ? "\n" : "";
-		}
-		answer +=  "\n";
-		return answer;
-	}
-	public String toStringInitial() {
-		String answer = "|";
-		for(int i = 0; i< initialArray.length; i++)
-		{
-			answer += String.format("%4d ",initialArray[i]);
-			answer += i%15==0 ? "\n" : "";
-			answer += initialArray.length-1 != i ? "|":"";
-		}
-		
-		return answer;
-	}	
-	
-	public String toStringFinal() {
-		String answer = "|";
-		for(int i = 0; i< finalArray.length; i++)
-		{
-			answer += String.format("%4d ",finalArray[i]);
-			answer += i%15==0 ? "\n" : "";
-			answer += finalArray.length-1 != i ? "|":"";
-		}
-		
-		return answer;
-	}
-	
     /**
      * クラスのコンストラクターであり、
      * 初期配列、最終配列、およびアルゴリズム名を初期化します。
@@ -188,6 +137,81 @@ abstract class SortInt{
 	public void addMovement() {
 		this.movements++;
 	}
+    /**
+     * 整数型の配列を受け取り、その値を1行に15個ずつ並べた形式の文字列を返します。
+     *
+     * @param int[] array: 文字列へ変換対象の整数配列）.
+     * @return String 配列の値を文字列形式に整えたもの
+     */
+	static public String toString(int[] array) {
+		String answer = "|";
+		
+		for(int i = 0; i< array.length; i++)
+		{
+			answer += String.format("%4d ",array[i]);
+			answer += (i+1)%15==0 ? "\n" : "";
+			answer += array.length-1 != i ? "|":"";
+		}
+		return answer;
+	}
+    /**
+     * 整数型の配列を受け取り、その値を1行に15個ずつ並べた形式の文字列を返します。
+     *
+     * @param int[] array: 文字列へ変換対象の整数配列）.
+     * @param int a: 値が交換されている配列内の位置
+     * @param int b: 値が交換されている配列内の位置
+     * @return String 配列の値を文字列形式に整えたもの
+     */
+	static public String toString(int[] array, int a, int b) {
+		String answer = "";
+		for(int i = 0; i < array.length; i++)
+		{
+			if(i == a){
+				answer += String.format("|>%4d ",array[i]);
+			}else if( i == b){
+				answer += String.format("|<%4d ",array[i]);
+			}else {
+				answer += String.format("| %4d ",array[i]);
+			}
+			answer += (i+1)%15==0 ? "\n" : "";
+		}
+		answer +=  "\n";
+		return answer;
+	}
+    /**
+	 * インスタンスに保持されている初期配列を取得し、
+	 * 配列の値を1行あたり15個ずつ区切って整形した文字列を返します。
+     * @return String: 1行15個の値で構成された配列の文字列表現
+     */
+	public String toStringInitial() {
+		String answer = "|";
+		for(int i = 0; i< initialArray.length; i++)
+		{
+			answer += String.format("%4d ",initialArray[i]);
+			answer += i%15==0 ? "\n" : "";
+			answer += initialArray.length-1 != i ? "|":"";
+		}
+		
+		return answer;
+	}	
+	/**
+	 * ソート結果の配列を受け取り、
+	 * 配列の値を1行あたり15個ずつ区切って整形した文字列を返します。
+	 *
+	 * @return String: 1行15個の値で構成された配列の文字列表現
+	 */
+	public String toStringFinal() {
+		String answer = "|";
+		for(int i = 0; i< finalArray.length; i++)
+		{
+			answer += String.format("%4d ",finalArray[i]);
+			answer += i%15==0 ? "\n" : "";
+			answer += finalArray.length-1 != i ? "|":"";
+		}
+		
+		return answer;
+	}
+	
     /**
      * 本メソッドは、初期配列を整列する抽象メソッドです。
      * このメソッドには、サブクラスによる具体的な実装が求められます。
