@@ -1,4 +1,4 @@
-package utilities;
+package utils;
 
 
 import java.io.File;
@@ -21,7 +21,7 @@ import java.util.Scanner;
  * @author Motta Jaime  (モッタ ハイメ)
  */
 
-public class Utils {
+public class NumericBaseConvertions {
 	
 	static String LOG_FILE_NAME = "numericBaseConvertionsLog.txt";
 
@@ -104,11 +104,14 @@ public class Utils {
 		do {
 			try{
 				System.out.println("10進数を入力してください");
+				System.out.println("10進数は0から9999999の範囲でなければなりません。");
+				
 				initial = dividend = scan.nextInt();
-				continueInput = false;
+				if(initial >= 0 && initial <= 9999999)
+					continueInput = false;
 			}
 			catch (InputMismatchException ex) {
-				System.out.println("この操作には 10 進数の数値を入力する必要があります。小数でもう一度試してください。");
+				System.out.println("この操作には 10 進数の数値を入力する必要があります。小数でもう一度試してください。");				
 				scan.nextLine();
 			}
 		}while (continueInput);
