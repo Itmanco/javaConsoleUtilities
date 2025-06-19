@@ -8,6 +8,8 @@ import java.util.Scanner;
  * このコンソールアプリケーションは、いくつかのソートアルゴリズムの配列に対する性能を把握するために作成されました。
  * 
  * <p>利便性を考慮し、すべてのクラスは同じファイル内に追加されましたが、同一のパッケージに属する別々のファイルに容易に分割することも可能です。</p>
+ * <p>ソートアルゴリズムは学術目的で、以下のウェブサイトから引用されています：</p>
+ * <p>https://medium.com/@AlexanderObregon/introduction-to-sorting-algorithms-in-java-a-beginners-guide-db522047effb</p>
  * <p> 2025年6月19日に完成</p>
  * @author Motta Jaime  (モッタ ハイメ)
  */
@@ -222,15 +224,31 @@ abstract class SortInt{
 	abstract int[]  sort();
 }
 
+
+/**
+ * 抽象クラス {@code SortInt} のサブクラスです。
+ * クイックソート（QuickSort）アルゴリズムを実装しています。
+ */
 class QuickSort extends SortInt{
 
-
+	/**
+	 * QuickSort クラスのインスタンスを生成します。
+	 * 指定された初期配列を使用して、親クラス {@code SortInt} を初期化し、
+	 * ソートアルゴリズム名として「QuickSort」を設定します。
+	 *
+	 * @param initialArray ソート対象となる初期配列
+	 */
 	public QuickSort(int[] initialArray) {
 		super(initialArray, "QuickSort");
 		System.out.println(toString()+"<-最初");
 	}
 
-
+	/**
+	 * Sorts the array using the QuickSort algorithm.
+	 * Records the start time and calculates the elapsed time after sorting is complete.
+	 *
+	 * @return The sorted array
+	 */
 	@Override
 	int[] sort() {
 		super.startTime = System.nanoTime();
@@ -241,6 +259,13 @@ class QuickSort extends SortInt{
 		return finalArray;
 	}
 	
+	/**
+	 * QuickSort アルゴリズムに基づいて、指定された範囲の配列を再帰的にソートします。
+	 *
+	 * @param arr ソート対象の配列
+	 * @param low ソート範囲の開始インデックス
+	 * @param high ソート範囲の終了インデックス
+	 */
 	public void quickSort(int[] arr, int low, int high) {
 	    if (low < high) {
 	        int pivotIndex = partition(arr, low, high);
@@ -248,7 +273,16 @@ class QuickSort extends SortInt{
 	        quickSort(arr, pivotIndex + 1, high);
 	    }
 	}
-
+	/**
+	 * QuickSort アルゴリズムにおけるパーティション操作を行います。
+	 * 指定された配列範囲内でピボットより小さい要素を前方に移動させ、
+	 * ピボットの正しい位置を決定してそのインデックスを返します。
+	 *
+	 * @param arr ソート対象の配列
+	 * @param low パーティションの開始インデックス
+	 * @param high パーティションの終了インデックス（ピボット要素の位置）
+	 * @return ピボット要素を配置した位置のインデックス
+	 */
 	public int partition(int[] arr, int low, int high) {
 	    int pivot = arr[high];
 	    int i = low - 1;
@@ -271,14 +305,29 @@ class QuickSort extends SortInt{
 	}
 }
 
-
+/**
+ * {@code SortInt} クラスを継承した BubbleSort クラスです。
+ * バブルソートアルゴリズムを用いて整数配列をソートします。
+ * ソート処理の過程で、交換回数をカウントし、視覚的な出力を行います。
+ */
 class BubbleSort extends SortInt{
-
+	/**
+     * BubbleSort クラスのインスタンスを生成します。
+     * 指定された初期配列を使用して、親クラス {@code SortInt} を初期化し、
+     * ソートアルゴリズム名として「BubbleSort」を設定します。
+     *
+     * @param initialArray ソート対象となる初期配列
+     */
 	public BubbleSort(int[] initialArray) {
 		super(initialArray, "BubbleSort");
 		System.out.println(toString()+"<-最初");	
 	}
-
+    /**
+     * バブルソートアルゴリズムを用いて配列をソートします。
+     * ソート開始時刻を記録し、完了後に経過時間を計測します。
+     *
+     * @return ソートされた配列
+     */
 	@Override
 	int[] sort() {
 		super.startTime = System.nanoTime();
@@ -288,7 +337,15 @@ class BubbleSort extends SortInt{
 		super.setElapsedTime(System.nanoTime());
 		return finalArray;
 	}
-	
+    /**
+     * バブルソートアルゴリズムを実行します。
+     * 隣接する要素を比較して、必要に応じて交換を行いながら、
+     * 配列を昇順に整列させます。
+     * 各交換操作ごとに {@code addMovement()} を呼び出してカウントを行い、
+     * 状態をコンソールに出力します。
+     *
+     * @param arr ソート対象の配列
+     */
 	public void bubbleSort(int[] arr) {
 	    int n = arr.length;
 	    boolean swapped;
@@ -310,14 +367,29 @@ class BubbleSort extends SortInt{
 	
 }
 
-
+/**
+ * {@code SortInt} クラスを継承した InsertionSort クラスです。
+ * 挿入ソートアルゴリズムを用いて整数配列をソートします。
+ * ソート処理の過程で、移動回数をカウントし、状態をコンソールに出力します。
+ */
 class InsertionSort extends SortInt{
-
+    /**
+     * InsertionSort クラスのインスタンスを生成します。
+     * 指定された初期配列を使用して、親クラス {@code SortInt} を初期化し、
+     * ソートアルゴリズム名として「InsertionSort」を設定します。
+     *
+     * @param initialArray ソート対象となる初期配列
+     */
 	public InsertionSort(int[] initialArray) {
 		super(initialArray, "InsertionSort");
 		System.out.println(toString()+"<-最初");
 	}
-
+    /**
+     * 挿入ソートアルゴリズムを用いて配列をソートします。
+     * ソート開始時刻を記録し、完了後に経過時間を計測します。
+     *
+     * @return ソートされた配列
+     */
 	@Override
 	int[] sort() {
 		super.startTime = System.nanoTime();
@@ -327,7 +399,15 @@ class InsertionSort extends SortInt{
 		super.setElapsedTime(System.nanoTime());
 		return finalArray;
 	}
-	
+    /**
+     * 挿入ソートアルゴリズムを実行します。
+     * 未ソート部分の要素を1つずつ適切な位置に挿入しながら、
+     * 配列を昇順に整列させます。
+     * 各要素の移動ごとに {@code addMovement()} を呼び出してカウントし、
+     * 状態をコンソールに出力します。
+     *
+     * @param arr ソート対象の配列
+     */
 	public void insertionSort(int[] arr) {
 	    int n = arr.length;
 	    for (int i = 1; i < n; i++) {
@@ -344,13 +424,29 @@ class InsertionSort extends SortInt{
 	}
 }
 
+/**
+ * {@code SortInt} クラスを継承した SelectionSort クラスです。
+ * 選択ソートアルゴリズムを用いて整数配列をソートします。
+ * ソート処理の過程で、交換回数をカウントし、配列の状態をコンソールに出力します。
+ */
 class SelectionSort extends SortInt{
-
+    /**
+     * SelectionSort クラスのインスタンスを生成します。
+     * 指定された初期配列を使用して、親クラス {@code SortInt} を初期化し、
+     * ソートアルゴリズム名として「SelectionSort」を設定します。
+     *
+     * @param initialArray ソート対象となる初期配列
+     */
 	public SelectionSort(int[] initialArray) {
 		super(initialArray, "SelectionSort");
 		System.out.println(toString()+"<-最初");
 	}
-
+    /**
+     * 選択ソートアルゴリズムを用いて配列をソートします。
+     * ソート開始時刻を記録し、完了後に経過時間を計測します。
+     *
+     * @return ソートされた配列
+     */
 	@Override
 	int[] sort() {
 		super.startTime = System.nanoTime();
@@ -360,7 +456,15 @@ class SelectionSort extends SortInt{
 		super.setElapsedTime(System.nanoTime());
 		return finalArray;
 	}
-	
+    /**
+     * 選択ソートアルゴリズムを実行します。
+     * 未ソート部分から最小の要素を選び、先頭の要素と交換しながら
+     * 配列を昇順に整列させます。
+     * 各交換操作ごとに {@code addMovement()} を呼び出してカウントし、
+     * 配列の状態をコンソールに出力します。
+     *
+     * @param arr ソート対象の配列
+     */
 	public void selectionSort(int[] arr) {
 	    int n = arr.length;
 	    for (int i = 0; i < n - 1; i++) {
@@ -379,13 +483,30 @@ class SelectionSort extends SortInt{
 	}
 }
 
+/**
+ * {@code SortInt} クラスを継承した MergeSort クラスです。
+ * マージソートアルゴリズムを用いて整数配列をソートします。
+ * ソート処理の過程で要素の移動回数をカウントし、状態をコンソールに出力します。
+ */
 class MergeSort extends SortInt{
-
+    /**
+     * MergeSort クラスのインスタンスを生成します。
+     * 指定された初期配列を使用して親クラス {@code SortInt} を初期化し、
+     * ソートアルゴリズム名として「MergeSort」を設定します。
+     *
+     * @param initialArray ソート対象となる初期配列
+     */
 	public MergeSort(int[] initialArray) {
 		super(initialArray, "MergeSort");
 		System.out.println(toString()+"<-最初");
 	}
 
+    /**
+     * マージソートアルゴリズムを用いて配列をソートします。
+     * ソート開始時刻を記録し、完了後に経過時間を計測します。
+     *
+     * @return ソートされた配列
+     */
 	@Override
 	int[] sort() {
 		super.startTime = System.nanoTime();
@@ -396,6 +517,13 @@ class MergeSort extends SortInt{
 		return finalArray;
 	}
 	
+    /**
+     * 配列の指定範囲を再帰的に分割し、マージソートを実行します。
+     *
+     * @param arr ソート対象の配列
+     * @param left 範囲の開始インデックス
+     * @param right 範囲の終了インデックス
+     */
 	public void mergeSort(int[] arr, int left, int right) {
 	    if (left < right) {
 	        int mid = (left + right) / 2;
@@ -405,6 +533,15 @@ class MergeSort extends SortInt{
 	    }
 	}
 
+    /**
+     * 2つのソート済み部分配列をマージし、1つのソート済み配列に統合します。
+     * マージの過程で要素の移動をカウントし、配列の状態をコンソールに出力します。
+     *
+     * @param arr ソート対象の配列
+     * @param left 部分配列の開始インデックス
+     * @param mid 部分配列の中間インデックス
+     * @param right 部分配列の終了インデックス
+     */
 	public void merge(int[] arr, int left, int mid, int right) {
 	    int n1 = mid - left + 1;
 	    int n2 = right - mid;
@@ -452,19 +589,55 @@ class MergeSort extends SortInt{
 	}
 }
 
+/**
+ * {@code LetsSort} クラスは、さまざまな配列ソートアルゴリズムを実行するための
+ * コンソールベースのアプリケーションを提供します。
+ * ユーザーは配列のサイズと値の範囲を設定し、複数のソートアルゴリズムを試すことができます。
+ * 各ソートの実行時間と移動回数も表示します。
+ * <p>
+ * このクラスは{@code menu}インターフェースを実装しており、アプリケーションのメインメニューと
+ * 機能の管理を担当します。
+ * </p>
+
+ * @author Motta Jaime  (モッタ ハイメ)
+ * @version 1.0
+ * @since <p> 2025年6月19日に完成</p>
+ * @see menu
+ * @see QuickSort
+ * @see BubbleSort
+ * @see InsertionSort
+ * @see SelectionSort
+ * @see MergeSort
+ */
 public class LetsSort implements menu{
-	static int size = 0, range = 0, sortingTypes = 5;
+	/** 配列の現在のサイズ */
+	static int size = 0;
+	/** 配列要素の最大範囲（0からこの値まで） */
+	static int range = 0;
+	 /** 利用可能なソートアルゴリズムの数 */
+	static int sortingTypes = 5;
+	/** ソート操作の対象となる配列 */
 	static int[] array; 
+	/** 各ソートアルゴリズムの最終実行時間を格納する配列 */
 	static String[] times = new String[sortingTypes];
-	
+
+    /**
+     * プログラムのエントリポイントです。
+     * {@code LetsSort}のインスタンスを生成し、アプリケーションのメニューを開始します。
+     *
+     * @param args コマンドライン引数（このアプリケーションでは使用しません）
+     */
 	public static void main(String[] args) {
 
 		LetsSort ls = new LetsSort();
 		ls.startMenu();
 	}
 	
-
-	@Override
+    /**
+     * メインメニューを表示します。
+     * 配列のサイズと値の範囲が設定されているかによって、異なるメニューオプションを表示します。
+     */
+    @Override
 	public void mainMenu() {
 		
 		if(size < 1 || range == 0) {
@@ -489,6 +662,12 @@ public class LetsSort implements menu{
 		}
 	}
 
+    /**
+     * ユーザーが選択したメニューオプションに応じた機能を実行します。
+     *
+     * @param option ユーザーが選択したメニュー番号。
+     * @param scan   ユーザーからのコンソール入力を読み取るための{@code Scanner}オブジェクト。
+     */
 	@Override
 	public void functionalities(int option, Scanner scan) {
 		switch(option) {
@@ -520,31 +699,43 @@ public class LetsSort implements menu{
 		
 	}
 
-
+    /**
+     * QuickSortアルゴリズムを使用して現在の配列を並べ替えます。
+     * ソート時間と移動回数をコンソールに表示し、最終実行時間を記録します。
+     */
 	private void useQuickSort() {
 		QuickSort s = new QuickSort(array);
 		s.sort();
 		times[0] = s.getElapsedTime();
 		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
-		
 	}
 	
+    /**
+     * BubbleSortアルゴリズムを使用して現在の配列を並べ替えます。
+     * ソート時間と移動回数をコンソールに表示し、最終実行時間を記録します。
+     */
 	private void useBubbleSort() {
 		BubbleSort s = new BubbleSort(array);
 		s.sort();
 		times[1] = s.getElapsedTime();
 		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
-		
 	}
 	
+    /**
+     * InsertionSortアルゴリズムを使用して現在の配列を並べ替えます。
+     * ソート時間と移動回数をコンソールに表示し、最終実行時間を記録します。
+     */
 	private void useInsertionSort() {
 		InsertionSort s = new InsertionSort(array);
 		s.sort();
 		times[2] = s.getElapsedTime();
 		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
-		
 	}
 	
+    /**
+     * SelectionSortアルゴリズムを使用して現在の配列を並べ替えます。
+     * ソート時間と移動回数をコンソールに表示し、最終実行時間を記録します。
+     */
 	private void useSelectionSort() {
 		SelectionSort s = new SelectionSort(array);
 		s.sort();
@@ -552,7 +743,10 @@ public class LetsSort implements menu{
 		System.out.printf("%s: Time %s - Movements %4d",s.name,s.getElapsedTime(),s.movements);
 	}
 	
-
+    /**
+     * MergeSortアルゴリズムを使用して現在の配列を並べ替えます。
+     * ソート時間と移動回数をコンソールに表示し、最終実行時間を記録します。
+     */
 	private void useMergeSort() {
 		MergeSort s = new MergeSort(array);
 		s.sort();
@@ -562,11 +756,13 @@ public class LetsSort implements menu{
 	}
 
 
-	/**
-	 * 
-	 * @param Scanner コンソールを操作するために使用
-	 * @return void
-	 */
+    /**
+     * ユーザーからの入力に基づいて配列のサイズを設定します。
+     * サイズは1から10,000の範囲でなければなりません。
+     * 新しいサイズと範囲が有効な場合、新しいランダムな配列が初期化され、過去のソート時間はリセットされます。
+     *
+     * @param scan ユーザーからのコンソール入力を読み取るための{@code Scanner}オブジェクト。
+     */
 	public static void setArraySize(Scanner scan) {
 		boolean continueInput = true;
 		int value = 0;
@@ -596,11 +792,13 @@ public class LetsSort implements menu{
 	       
 	}
 	
-	/**
-	 * 
-	 * @param Scanner コンソールを操作するために使用
-	 * @return void
-	 */
+    /**
+     * ユーザーからの入力に基づいて配列要素のランダムな範囲を設定します。
+     * 範囲は0より大きい値でなければなりません。
+     * 新しいサイズと範囲が有効な場合、新しいランダムな配列が初期化され、過去のソート時間はリセットされます。
+     *
+     * @param scan ユーザーからのコンソール入力を読み取るための{@code Scanner}オブジェクト。
+     */
 	public static void setArrayRange(Scanner scan) {
 		boolean continueInput = true;
 		int value = 0;
@@ -628,6 +826,10 @@ public class LetsSort implements menu{
 		}
 	}
 	
+    /**
+     * 現在の配列の内容をコンソールに表示します。
+     * 配列が初期化されていない場合は、何も表示されません。
+     */
 	private void showCurrentArray() {
 		System.out.println(SortInt.toString(array));
 	}
